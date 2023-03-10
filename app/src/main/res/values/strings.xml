@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Smirnov proekt</string>
     <string name="choose_button">Изделия</string>
-    <string name="user_meals_title">Smirnov proekt</string>
+    <string name="user_meals_kr">Круассан</string>
+    <string name="user_meals_bsm">Булка с маком</string>
+    <string name="user_meals_kr_c">170₽</string>
+    <string name="user_meals_bcm_c">250₽</string>
+    <string name="user_meals_kr_opi">Круассан - небольшое мучное кондитерское изделие,
+        булочка в форме полумесяца, рогалика из слоёного теста.
+        Очень популярный продукт французской кухни.</string>
+    <string name="user_meals_kr_data">Дата изготовления:</string>
+    <string name="user_meals_kr_data_t">25:12:2022</string>
 </resources>

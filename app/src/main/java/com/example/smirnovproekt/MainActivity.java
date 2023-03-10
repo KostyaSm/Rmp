@@ -1,73 +1,112 @@
-package com.example.smirnovproekt;
+package com.example.meal_builder;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentResultListener;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.meal_builder.databinding.ActivityMainBinding;
+import com.example.meal_builder.databinding.MealCardExampleBinding;
+import com.example.meal_builder.databinding.MealCardTemplateBinding;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MyLogs";
-
-    protected void createToast(String text){
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
+public class MainActivity extends FragmentActivity {
+    private final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        createToast("onCreate");
-        Log.i(TAG, "Приложение запущено");
-        Log.e(TAG, "Данные не найдены");
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+
+        setContentView(binding.getRoot());
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onCreate");
+
+        ImageView cardImg = (ImageView) findViewById(R.id.card_example_img);
+        cardImg.setImageResource(R.drawable.breakfast1);
+
+        TextView cardTitle = (TextView) findViewById(R.id.card_example_title);
+        cardTitle.setText("Мой завтрак");
+
+        MealCardTemplateBinding cardTemplatebinding = MealCardTemplateBinding.inflate(
+                getLayoutInflater(), binding.cardsContainer, true
+        );
+        cardTemplatebinding.mealCardImg.setImageResource(R.drawable.sandwitch);
+        cardTemplatebinding.mealCardTitle.setText("Мой перекус");
+        cardTemplatebinding.mealCardCalories.setText("341");
+        cardTemplatebinding.mealCardFats.setText("23");
+        cardTemplatebinding.mealCardProtein.setText("156");
+        cardTemplatebinding.mealCardCarbonhydrates.setText("64");
+        cardTemplatebinding.mealCardParts.setImageResource(R.drawable.salad);
+
+        Button addMealBtn = (Button) findViewById(R.id.add_meal_btn);
+
+        addMealBtn.setOnClickListener(
+                addMealBtn1 -> Log.i(TAG, "Add meal btn pressed (programmatically processed)")
+        );
+
+        getSupportFragmentManager().setFragmentResultListener(
+                "mealEdit",
+                this,
+                (requestKey, result) -> cardTitle.setText(result.getString("title"))
+        );
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        createToast("onStart");
+        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onStart");
-        Log.w(TAG, "Заканчивается память");
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        createToast("onResume");
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        createToast("onPause");
-        Log.d(TAG, "onPause");
-        Log.v(TAG, "приложение было свернуто уже много раз");
-    }
-
     @Override
     protected void onStop() {
         super.onStop();
-        createToast("onStop");
-        Log.d(TAG, "onStop");
+        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "onStop");
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        createToast("onDestroy");
-        Log.d(TAG, "onDestroy");
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        Log.w(TAG, "onDestroy");
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+        Log.v(TAG, "onPause");
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onResume");
     }
 
-    @Override
     protected void onRestart() {
         super.onRestart();
-        createToast("onRestart");
-        Log.d(TAG, "onRestart");
+        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onRestart");
+    }
+
+    public void onExampleCardClick(View view) {
+        Log.i(TAG, "Example card clicked (declaratively processed)");
+
+        MealCardExampleBinding binding = MealCardExampleBinding.bind(view);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("title",  binding.cardExampleTitle.getText().toString());
+
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.fragment_container_view, EditMealFragment.class, bundle)
+                .commit();
     }
 }

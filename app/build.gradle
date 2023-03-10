@@ -6,6 +6,12 @@ android {
     namespace 'com.example.smirnovproekt'
     compileSdk 33
 
+    buildFeatures {
+        buildFeatures {
+            viewBinding true
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.smirnovproekt"
         minSdk 24
