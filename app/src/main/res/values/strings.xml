@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Smirnov proekt</string>
+    <string name="choose_button">Изделия</string>
+    <string name="user_meals_title">Smirnov proekt</string>
 </resources>
