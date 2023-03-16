@@ -8,10 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.EditText;
 
 import com.example.meal_builder.databinding.ActivityMainBinding;
 import com.example.meal_builder.databinding.MealCardExampleBinding;
@@ -48,9 +48,7 @@ public class MainActivity extends FragmentActivity {
 
         Button addMealBtn = (Button) findViewById(R.id.add_meal_btn);
 
-        addMealBtn.setOnClickListener(
-                addMealBtn1 -> Log.i(TAG, "Add meal btn pressed (programmatically processed)")
-        );
+        addMealBtn.setOnClickListener(addMealBtn1 -> Log.i(TAG, "Add meal btn pressed (programmatically processed)"));
 
         getSupportFragmentManager().setFragmentResultListener(
                 "mealEdit",
