@@ -23,7 +23,7 @@ public class Edit extends AppCompatActivity {
         binding.mealTitle.setText(title);
     }
 
-    public void onCancelBthClic(View view) {
+    public void onCancelBthClick(View view) {
         finish();
     }
 
