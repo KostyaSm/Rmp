@@ -14,6 +14,13 @@ public class EditMealFragment extends Fragment {
         super(R.layout.fragment_edit_meal);
     }
 
+    static ArrayList<MealPart> parts = new ArrayList<MealPart>() {
+        {
+            add(new MealPart(ChoosePartsFragment.choosableParts.get(0)));
+            add(new MealPart(ChoosePartsFragment.choosableParts.get(1)));
+        }
+    };
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         String title = requireArguments().getString("title");
@@ -22,6 +29,11 @@ public class EditMealFragment extends Fragment {
         TextView titleView = (TextView) getView().findViewById(R.id.meal_title);
 
         titleView.setText(title);
+
+        ListView partsList = getView().findViewById(R.id.parts_container);
+        MealPartVariantAdapter adapter = new MealPartVariantAdapter(getContext(), R.layout.meal_part_template, parts);
+        partsList.setAdapter(adapter);
+
 
         Button cancelBtn = (Button) getView().findViewById(R.id.editCancelBtn);
         cancelBtn.setOnClickListener((cancelBtn1) -> {
