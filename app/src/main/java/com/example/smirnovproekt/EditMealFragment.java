@@ -1,15 +1,20 @@
 package com.example.meal_builder;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.meal_builder.databinding.MealPartTemplateBinding;
 
 public class EditMealFragment extends Fragment {
+    private final String TAG = this.getClass().getSimpleName();
+
     public EditMealFragment() {
         super(R.layout.fragment_edit_meal);
     }
@@ -18,6 +23,10 @@ public class EditMealFragment extends Fragment {
         {
             add(new MealPart(ChoosePartsFragment.choosableParts.get(0)));
             add(new MealPart(ChoosePartsFragment.choosableParts.get(1)));
+
+            for (int i = 0; i < 20; i++) {
+                add(new MealPart(ChoosePartsFragment.choosableParts.get(1)));
+            }
         }
     };
 
@@ -31,6 +40,7 @@ public class EditMealFragment extends Fragment {
         titleView.setText(title);
 
         ListView partsList = getView().findViewById(R.id.parts_container);
+        partsList.setItemsCanFocus(true);
         MealPartVariantAdapter adapter = new MealPartVariantAdapter(getContext(), R.layout.meal_part_template, parts);
         partsList.setAdapter(adapter);
 
