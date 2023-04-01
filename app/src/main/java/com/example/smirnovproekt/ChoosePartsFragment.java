@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,16 +55,13 @@ public class ChoosePartsFragment extends Fragment {
         partsList.setAdapter(adapter);
         Button cancelBtn = (Button) getView().findViewById(R.id.chooseCancelBtn);
         cancelBtn.setOnClickListener((cancelBtn1) -> {
-            requireActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+            Navigation.findNavController(view).popBackStack();
         });
 
         Button saveBtn = (Button) getView().findViewById(R.id.chooseSaveBtn);
         saveBtn.setOnClickListener((saveBtn1) -> {
-            Bundle result = new Bundle();
-            result.putSerializable("parts", partsService.getParts());
-//            putStringArrayList("parts", new ArrayList<String>(Arrays.asList("asd", "123")));
-            getParentFragmentManager().setFragmentResult("partsChoise", result);
-            getParentFragmentManager.beginTransaction().remove(this).commit();
+            Navigation.findNavController(view).getPreviousBackStackEntry().getSavedStateHandle().set("partsChoise", partsService.getParts());
+            Navigation.findNavController(view).popBackStack();
         });
 
         public void addChosenPart(ChoosableMealPart part) {
